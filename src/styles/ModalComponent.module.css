@@ -1,0 +1,31 @@
+.modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  background-color: #070707;
+  color: inherit;
+  max-width: 800px;
+ margin: auto;
+
+}
+.overlay {
+  background-color: #0a0808a9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid #ccc;
+}
+.header h1 {
+  margin: 0;
+    font-size: 20px;
+}

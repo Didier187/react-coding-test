@@ -1,0 +1,107 @@
+.container {
+  border-bottom: 1px solid #ccc;
+}
+.container .layout {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  align-items: center;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+.container a {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+h1 {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.logout-btn {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  transition: all 0.25s ease-in-out;
+  width: 100%;
+}
+.logout-btn:hover {
+  background-color: #4d53ca;
+}
+.dropdown {
+  position: relative;
+  text-align: start;
+  background-color: transparent;
+}
+.dropdown-content {
+  position: absolute;
+  min-width: 150px;
+  background-color: #242424;
+  padding: 1em;
+  z-index: 1;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  right:calc(100% - 57px);
+}
+.user-details {
+ border-bottom: 1px solid #ccc;
+ margin-bottom: 1em;
+  padding-bottom: 1em;
+}
+.user-details .name{
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+}
+.user-details .email{
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+  /* muted color */
+  color: #ccc;
+}
+.assignment-btn{
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  transition: all 0.25s ease-in-out;
+  width: 100%;
+  position: relative;
+}
+.assignment-btn:hover {
+  background-color: #4d53ca;
+}
+.assignment-question-count{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #4d53ca;
+  color: white;
+  border-radius: 4px;
+  padding: 0.25em 0.5em;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}

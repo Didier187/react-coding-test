@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useBoundStore } from "../store";
-import styles from "../styles/Header.module.css";
-import Modal from "./ModalComponent";
-import CreateAssignement from "./CreateAssignment";
+import { useBoundStore } from "../../store";
+import styles from "./Header.module.css";
+import Modal from "../modal/ModalComponent";
+import CreateAssignement from "../create-task/CreateAssignment";
 import { Dropdown } from "./Header";
 
 export default function Header() {

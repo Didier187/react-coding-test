@@ -1,6 +1,6 @@
-import { useBoundStore } from "../store";
-import Question from "./Question";
-import styles from "../styles/ShortList.module.css";
+import { useBoundStore } from "../../store";
+import Question from "../question/Question";
+import styles from "./ShortList.module.css";
 
 export default function ShortList() {
   const shortList = useBoundStore((state) => state.shortList);

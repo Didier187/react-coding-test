@@ -1,8 +1,8 @@
-import useSwr from "swr";
-import styles from "../styles/Questions.module.css";
-import { useBoundStore } from "../store";
 import { useSearchParams } from "react-router-dom";
+import useSwr from "swr";
+import { useBoundStore } from "../../store";
 import Question from "./Question";
+import styles from "./Questions.module.css";
 
 type Args = [string, { "x-auth-token": string }] & URL & HeadersInit;
 

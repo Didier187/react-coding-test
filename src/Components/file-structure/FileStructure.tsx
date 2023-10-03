@@ -1,5 +1,5 @@
-import { useBoundStore } from "../store";
-import Toggler from "./Toggler";
+import { useBoundStore } from "../../store";
+import Toggler from "../toggler/Toggler";
 
 type FileItem = {
   directory?: Record<string, FileItem>;

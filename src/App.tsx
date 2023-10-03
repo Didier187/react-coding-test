@@ -1,16 +1,14 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import About from "./Components/About";
-import CreateAccount from "./Components/CreateAccount";
-import Home from "./Components/Home";
-import Login from "./Components/Login";
-import MainFrame from "./Components/MainFrame";
-import NotFound from "./Components/NotFound";
-import Questions from "./Components/Questions";
-
-import QuestionsDetails from "./Components/QuestionsDetails";
+import About from "./Components/about/About";
+import CreateAccount from "./Components/create-account/CreateAccount";
+import Home from "./Components/home/Home";
+import Login from "./Components/login/Login";
+import MainFrame from "./Components/main-frame/MainFrame";
+import NotFound from "./Components/not-found/NotFound";
+import Questions from "./Components/question/Questions";
+import QuestionsDetails from "./Components/question/QuestionsDetails";
+import ShortList from "./Components/shortlist/ShortList";
 import { useBoundStore } from "./store";
-import ShortList from "./Components/ShortList";
-
 
 export default function App() {
   return (

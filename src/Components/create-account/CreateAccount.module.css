@@ -100,10 +100,7 @@
 .form-container form button:disabled:hover {
   background-color: #ccc;
 }
-.error {
-  color: red;
-  font-size: 0.8rem;
-}
+
 .server-error{
   color:  red;
   font-size: 1rem;

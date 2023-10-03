@@ -1,11 +1,10 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
-import styles from "../styles/CreateAccount.module.css";
-import { useState } from "react";
-import FormError from "./FormError";
 import axios from "axios";
-import { useBoundStore } from "../store";
-
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useBoundStore } from "../../store";
+import FormError from "../form-error/FormError";
+import styles from "./Login.module.css";
 
 interface LoginProps {
   email: string;

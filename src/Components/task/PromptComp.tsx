@@ -1,4 +1,4 @@
-import Toggler from "./Toggler";
+import Toggler from "../toggler/Toggler";
 
 export default function PromptComp({
   questionData,

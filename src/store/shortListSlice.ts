@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { QuestionProps } from "../Components/Questions";
+import { QuestionProps } from "../Components/question/Questions";
 
 export interface ShortListSlice {
   shortList: QuestionProps[];

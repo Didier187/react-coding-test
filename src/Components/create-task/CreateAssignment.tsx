@@ -1,11 +1,11 @@
-import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
-import { useBoundStore } from "../store";
-import styles from "../styles/CreateAssignment.module.css";
-import FormError from "./FormError";
-import {  Link } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { useBoundStore } from "../../store";
+import FormError from "../form-error/FormError";
+import styles from "./CreateTask.module.css";
 
-interface CreateAssignmentProps {
+interface CreateTaskProps {
   name: string;
   email: string;
   number: string;
@@ -14,16 +14,16 @@ interface CreateAssignmentProps {
 export default function CreateAssignement({
   closeModal,
 }: {
-  closeModal: (val:boolean) => void;
+  closeModal: (val: boolean) => void;
 }) {
   const questions = useBoundStore((state) => state.questions);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreateAssignmentProps>();
+  } = useForm<CreateTaskProps>();
   const token = useBoundStore((state) => state.token);
-  const onSubmit: SubmitHandler<CreateAssignmentProps> = (data) => {
+  const onSubmit: SubmitHandler<CreateTaskProps> = (data) => {
     axios
       .post(
         `${import.meta.env.VITE_SERVER_URL}/assignments`,
@@ -52,7 +52,14 @@ export default function CreateAssignement({
           Please add questions to the assignment before you can create the
           assignable task.
         </p>
-        <Link to="/questions" onClick={()=>{closeModal(false)}}>Browse questions</Link>
+        <Link
+          to="/questions"
+          onClick={() => {
+            closeModal(false);
+          }}
+        >
+          Browse questions
+        </Link>
       </div>
     );
   }

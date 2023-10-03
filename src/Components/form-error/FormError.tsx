@@ -1,5 +1,5 @@
 import { FieldError } from "react-hook-form";
-import styles from "../styles/CreateAccount.module.css";
+import styles from "./FormError.module.css";
 
 interface Props {
   isVisible: FieldError | undefined;

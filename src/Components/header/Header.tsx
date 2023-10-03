@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useBoundStore } from "../store";
-import styles from "../styles/Header.module.css";
+import { useBoundStore } from "../../store";
+import styles from "./Header.module.css";
 import { useEffect, useRef } from "react";
-import useClickOutside from "../Hooks/useClickOutSide";
+import useClickOutside from "../../Hooks/useClickOutSide";
 
 export const Dropdown = () => {
   const dropDownRef = useRef<HTMLDivElement>(null);

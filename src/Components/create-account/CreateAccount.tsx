@@ -1,10 +1,10 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import styles from "../styles/CreateAccount.module.css";
-import FormError from "./FormError";
+import styles from "./CreateAccount.module.css";
+import FormError from "../form-error/FormError";
 import { useState } from "react";
 import axios from "axios";
-import { useBoundStore } from "../store";
+import { useBoundStore } from "../../store";
 
 interface Inputs {
   name: string;

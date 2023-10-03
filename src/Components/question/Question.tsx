@@ -1,7 +1,7 @@
-import styles from "../styles/Questions.module.css";
-import { useBoundStore } from "../store";
 import { useNavigate } from "react-router-dom";
+import { useBoundStore } from "../../store";
 import { QuestionProps } from "./Questions";
+import styles from "./Questions.module.css";
 
 const Question = ({ question }: { question: QuestionProps }) => {
   const navigate = useNavigate();
@@ -74,11 +74,12 @@ const Question = ({ question }: { question: QuestionProps }) => {
           onClick={handleAddQuestion}
         >
           {isInAssignment ? (
-            <span className="material-symbols-outlined" datatype="highlighted">assignment_turned_in</span>
+            <span className="material-symbols-outlined" datatype="highlighted">
+              assignment_turned_in
+            </span>
           ) : (
             <span className="material-symbols-outlined">assignment_add</span>
           )}
-          
           Add Question
         </button>
         <button

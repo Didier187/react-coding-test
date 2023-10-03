@@ -4,26 +4,26 @@ import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "xterm/css/xterm.css";
 import "../App.css";
-import Editor from "./Editor";
-import FileStructure from "./FileStructure";
-import Header from "./Header.1";
+import Editor from "../editor/Editor";
+import FileStructure from "../file-structure/FileStructure";
+import Header from "../header/Header.1";
 import LoadingScreen from "./LoadingScreen";
 import Preview from "./Preview";
 import PromptComp from "./PromptComp";
 import TerminalComponent from "./TerminalComponent";
-import "../userWorker";
-import transformFilesFromDb from "../helpers/replaceUnderScoreWithPoint";
+import "../../userWorker";
+import transformFilesFromDb from "../../helpers/replaceUnderScoreWithPoint";
 import {
   installDependencies,
   startDevServer,
-} from "../helpers/bootingWebContainer";
-import { useBoundStore } from "../store";
+} from "../../helpers/bootingWebContainer";
+import { useBoundStore } from "../../store";
 
 type FileTree = {
   initialFiles: FileSystemTree;
 };
 
-function AssignmentScreen() {
+function TaskScreen() {
   const [loadingStates, setLoadingStates] = React.useState<string[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [indexFromDb, setIndexFromDb] = React.useState<string | undefined>("");
@@ -201,4 +201,4 @@ function AssignmentScreen() {
   );
 }
 
-export default AssignmentScreen;
+export default TaskScreen;

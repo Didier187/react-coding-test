@@ -175,7 +175,7 @@ button:focus-visible {
 }
 /* styles for a selected file */
 .file-structure-container {
-  height: calc(100% - 2.8em);
+  height: 100%;
   background-color: #1a1a1a;
 }
 .file-structure {

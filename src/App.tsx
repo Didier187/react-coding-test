@@ -12,7 +12,9 @@ import { useBoundStore } from "./store";
 
 export default function App() {
   return (
-    <div>
+    <div style={{
+      height: "100vh"
+    }}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

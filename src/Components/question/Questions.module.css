@@ -162,3 +162,27 @@ ul{
 .Advanced{
     border-color: #f44336;
 }
+.file-preview{
+  display: grid; 
+  grid-auto-columns: 1fr; 
+  grid-template-columns: min-content 1fr; 
+  grid-template-rows: 1fr; 
+  min-height: 400px;
+  grid-template-areas: 
+    "files content"; 
+}
+.question-files{
+  grid-area: files;
+  display: flex;
+}
+.question-file-contents{
+  grid-area: content; 
+  height: 100%;
+  width: -webkit-fill-available;
+  display:flex;
+}
+#code-preview{
+  width: 100%;
+  width: -webkit-fill-available;
+}
+

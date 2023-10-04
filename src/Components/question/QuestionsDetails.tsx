@@ -2,7 +2,12 @@ import { Navigate, useParams } from "react-router-dom";
 import useSwr from "swr";
 import { useBoundStore } from "../../store";
 import styles from "./Questions.module.css";
-
+import PreviewFileStructure from "./PreviewFileStructure";
+import useQuestionPreviewStandalone from "../../store/questionPreviewStandalone";
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/ace";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-monokai";
 type Args = [string, { "x-auth-token": string }] & URL & HeadersInit;
 
 const fetcher = (...args: Array<Args>) => {
@@ -23,6 +28,10 @@ export default function QuestionsDetails() {
     fetcher
   );
 
+  const currentFile = useQuestionPreviewStandalone(
+    (state) => state.currentFileContents
+  );
+
   if (isLoading) return <div>loading...</div>;
   if (error) return <Navigate to="/invalid-question-id" />;
 
@@ -36,6 +45,37 @@ export default function QuestionsDetails() {
         Prompt:
         <div dangerouslySetInnerHTML={{ __html: data?.prompt }} />
       </div>
+      <div className={styles["file-preview"]}>
+        <div className={styles["question-files"]}>
+          <PreviewFileStructure structure={data?.initialFiles} path={[]} />
+        </div>
+        <div className={styles["question-file-contents"]}>
+          <Editor currentFile={currentFile} />
+          
+        </div>
+      </div>
     </div>
   );
 }
+
+const Editor = ({ currentFile }: { currentFile: string }) => {
+  return (
+    <AceEditor
+      mode="javascript"
+      theme="monokai"
+      name="code-preview"
+      fontSize={13}
+      showPrintMargin={true}
+      showGutter={true}
+      highlightActiveLine={true}
+      value={currentFile}
+      style={{ width: "100%", height: "100%" }}
+      setOptions={{
+        showLineNumbers: true,
+        tabSize: 2,
+        blockScrolling: Infinity,
+      }}
+      readOnly={true}
+    />
+  );
+};

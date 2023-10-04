@@ -176,6 +176,7 @@ function TaskScreen() {
       //   console.log( JSON.stringify(forSubmission));
     }
   };
+  
   return (
     <>
       <LoadingScreen isLoading={false} state={loadingStates} />

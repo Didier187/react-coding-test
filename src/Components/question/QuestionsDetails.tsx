@@ -37,7 +37,7 @@ export default function QuestionsDetails() {
 
   return (
     <div className={styles["questions-page"]}>
-      <h2>Question Details</h2>
+      <h2 className={styles.headline}>Question Details</h2>
       <span>
         Level: <span>{data?.level}</span>
       </span>
@@ -45,6 +45,9 @@ export default function QuestionsDetails() {
         Prompt:
         <div dangerouslySetInnerHTML={{ __html: data?.prompt }} />
       </div>
+      <h2 className={styles.headline}>
+        Starter files
+      </h2>
       <div className={styles["file-preview"]}>
         <div className={styles["question-files"]}>
           <PreviewFileStructure structure={data?.initialFiles} path={[]} />

@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import styles from "./ModalComponent.module.css";
+import Close from "../icons/Close";
 
 Modal.setAppElement("#root");
 export default function ModalComponent({
@@ -14,7 +15,7 @@ export default function ModalComponent({
   onClose: () => void;
   title?: string;
 }) {
-  if (!isOpen) return null;   
+  if (!isOpen) return null;
   return (
     <div>
       <Modal
@@ -26,7 +27,7 @@ export default function ModalComponent({
         <div className={styles.header}>
           <h1>{title}</h1>
           <button onClick={onClose}>
-            <span className="material-symbols-outlined">close</span>
+            <Close />
           </button>
         </div>
         {children}

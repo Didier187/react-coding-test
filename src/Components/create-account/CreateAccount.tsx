@@ -5,6 +5,9 @@ import FormError from "../form-error/FormError";
 import { useState } from "react";
 import axios from "axios";
 import { useBoundStore } from "../../store";
+import EyeOpen from "../icons/EyeOpen";
+import EyeClose from "../icons/EyeClose";
+import Progress from "../icons/Progress";
 
 interface Inputs {
   name: string;
@@ -99,13 +102,7 @@ export default function CreateAccount() {
                 aria-invalid={errors.password ? "true" : "false"}
               />
               <button onClick={toggleShowPassword} type="button">
-                {showPassword ? (
-                  <span className="material-symbols-outlined">
-                    visibility_off
-                  </span>
-                ) : (
-                  <span className="material-symbols-outlined">visibility</span>
-                )}
+                {showPassword ? <EyeClose /> : <EyeOpen />}
               </button>
             </div>
             <FormError
@@ -118,11 +115,7 @@ export default function CreateAccount() {
             />
           </div>
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting && (
-              <span className="material-symbols-outlined">
-                progress_activity
-              </span>
-            )}
+            {isSubmitting && <Progress />}
             Create Account
           </button>
         </form>

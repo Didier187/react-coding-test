@@ -5,6 +5,8 @@ import styles from "./Header.module.css";
 import Modal from "../modal/ModalComponent";
 import CreateAssignement from "../create-task/CreateAssignment";
 import { Dropdown } from "./Header";
+import ShortList from "../icons/ShortList";
+import AddTask from "../icons/AddTask";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -32,15 +34,13 @@ export default function Header() {
             onClick={openModal}
             className={styles["assignment-btn"]}
           >
-            <span className="material-symbols-outlined">assignment_add</span>{" "}
+            <AddTask />
             <span className={styles["assignment-question-count"]}>
               {questions.length}
             </span>
           </Link>
           <Link to="/questions/shortlist">
-            <span className="material-symbols-outlined">
-              format_list_bulleted
-            </span>{" "}
+            <ShortList />
             Shortlist
           </Link>
 

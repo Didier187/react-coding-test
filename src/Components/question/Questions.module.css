@@ -185,4 +185,13 @@ ul{
   width: 100%;
   width: -webkit-fill-available;
 }
+.headline{
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #464444;
+  padding-bottom: 0.5em;
+  margin: 1.5em 0;
+}
 

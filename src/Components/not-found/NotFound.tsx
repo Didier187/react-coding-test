@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./NotFound.module.css";
+import Dissatisfied from "../icons/Dissatisfied";
 
 export default function NotFound() {
   return (
@@ -7,10 +8,7 @@ export default function NotFound() {
       <div>
         <h1>
           4
-          <span className="material-symbols-outlined">
-            sentiment_very_dissatisfied
-          </span>
-          4
+          <Dissatisfied />4
         </h1>
         <p>Page Not Found</p>
         <Link to="/">Go Home</Link>

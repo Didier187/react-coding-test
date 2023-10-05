@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { useBoundStore } from "../../store";
 import FormError from "../form-error/FormError";
 import styles from "./CreateTask.module.css";
+import Progress from "../icons/Progress";
+import Remove from "../icons/Remove";
+import Emoticon from "../icons/Emoticon";
 
 interface CreateTaskProps {
   name: string;
@@ -47,7 +50,7 @@ export default function CreateAssignement({
   if (questions.length === 0) {
     return (
       <div className={styles["empty"]}>
-        <span className="material-symbols-outlined">emoticon</span>
+        <Emoticon />
         <p>
           Please add questions to the assignment before you can create the
           assignable task.
@@ -93,7 +96,7 @@ export default function CreateAssignement({
                 }}
                 title="Remove question from assignment"
               >
-                <span className="material-symbols-outlined">remove</span>
+                <Remove />
               </button>
             </div>
           </div>
@@ -159,11 +162,7 @@ export default function CreateAssignement({
             />
           </div>
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting && (
-              <span className="material-symbols-outlined">
-                progress_activity
-              </span>
-            )}
+            {isSubmitting && <Progress />}
             Create Assignment
           </button>
         </form>

@@ -3,6 +3,8 @@ import useSwr from "swr";
 import { useBoundStore } from "../../store";
 import Question from "./Question";
 import styles from "./Questions.module.css";
+import Filter from "../icons/Filter";
+import Clear from "../icons/Clear";
 
 type Args = [string, { "x-auth-token": string }] & URL & HeadersInit;
 
@@ -25,7 +27,9 @@ export default function Questions() {
     { level: "Intermediate" },
     { level: "Advanced" },
   ];
+  
   const token = useBoundStore((state) => state.token);
+
   const questionUrl =
     `${import.meta.env.VITE_SERVER_URL}/questions?` +
     new URLSearchParams({
@@ -46,8 +50,7 @@ export default function Questions() {
     <div className={styles["questions-page"]}>
       <div className={styles.filters}>
         <strong>
-          <span className="material-symbols-outlined">filter_alt</span> Filter
-          by
+          <Filter /> Filter by
         </strong>{" "}
         :
         <div className={styles["filter-btn-container"]}>
@@ -72,7 +75,7 @@ export default function Questions() {
               onClick={resetSearchParams}
               className={styles["reset-filter-btn"]}
             >
-              <span className="material-symbols-outlined">clear</span>
+              <Clear />
             </button>
           )}
         </div>

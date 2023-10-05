@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useBoundStore } from "../../store";
 import FormError from "../form-error/FormError";
 import styles from "./Login.module.css";
+import EyeOpen from "../icons/EyeOpen";
+import EyeClose from "../icons/EyeClose";
+import Progress from "../icons/Progress";
 
 interface LoginProps {
   email: string;
@@ -81,13 +84,7 @@ export default function Login() {
                 aria-invalid={errors.password ? "true" : "false"}
               />
               <button onClick={toggleShowPassword} type="button">
-                {showPassword ? (
-                  <span className="material-symbols-outlined">
-                    visibility_off
-                  </span>
-                ) : (
-                  <span className="material-symbols-outlined">visibility</span>
-                )}
+                {showPassword ? <EyeClose /> : <EyeOpen />}
               </button>
             </div>
             <FormError
@@ -96,11 +93,7 @@ export default function Login() {
             />
           </div>
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting && (
-              <span className="material-symbols-outlined">
-                progress_activity
-              </span>
-            )}
+            {isSubmitting && <Progress />}
             Log in
           </button>
         </form>

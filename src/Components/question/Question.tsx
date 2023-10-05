@@ -2,6 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useBoundStore } from "../../store";
 import { QuestionProps } from "./Questions";
 import styles from "./Questions.module.css";
+import EyeOpen from "../icons/EyeOpen";
+import HeartNeutral from "../icons/HeartNeutral";
+import HeartHighlighted from "../icons/HeartHighlighted";
+import AddTask from "../icons/AddTask";
+import AddedTask from "../icons/AddedTask";
 
 const Question = ({ question }: { question: QuestionProps }) => {
   const navigate = useNavigate();
@@ -57,13 +62,7 @@ const Question = ({ question }: { question: QuestionProps }) => {
           onClick={handleFavorite}
           title={isFavorite ? "Remove from shortlist" : "Add to shortlist"}
         >
-          {isFavorite ? (
-            <span className="material-symbols-outlined" datatype="highlighted">
-              heart_check
-            </span>
-          ) : (
-            <span className="material-symbols-outlined">favorite</span>
-          )}
+          {isFavorite ? <HeartHighlighted /> : <HeartNeutral />}
         </button>
       </div>
       <div dangerouslySetInnerHTML={{ __html: question.prompt }} />
@@ -73,13 +72,7 @@ const Question = ({ question }: { question: QuestionProps }) => {
           title="Add Question to the assignement"
           onClick={handleAddQuestion}
         >
-          {isInAssignment ? (
-            <span className="material-symbols-outlined" datatype="highlighted">
-              assignment_turned_in
-            </span>
-          ) : (
-            <span className="material-symbols-outlined">assignment_add</span>
-          )}
+          {isInAssignment ? <AddedTask /> : <AddTask />}
           Add Question
         </button>
         <button
@@ -89,7 +82,7 @@ const Question = ({ question }: { question: QuestionProps }) => {
             navigate(`/questions/${question._id}`);
           }}
         >
-          <span className="material-symbols-outlined">visibility</span>
+          <EyeOpen />
           View Question
         </button>
       </div>

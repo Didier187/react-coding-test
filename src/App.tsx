@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import About from "./Components/about/About";
 import CreateAccount from "./Components/create-account/CreateAccount";
-import Home from "./Components/home/Home";
+import Navigation from "./Components/home/Navigation";
 import Login from "./Components/login/Login";
 import MainFrame from "./Components/main-frame/MainFrame";
 import NotFound from "./Components/not-found/NotFound";
@@ -9,17 +9,20 @@ import Questions from "./Components/question/Questions";
 import QuestionsDetails from "./Components/question/QuestionsDetails";
 import ShortList from "./Components/shortlist/ShortList";
 import { useBoundStore } from "./store";
+import TaskScreen from "./Components/task/TaskScreen";
+import Home from "./Components/home/Home";
 
 export default function App() {
   return (
-    <div style={{
-      height: "100vh"
-    }}>
+    <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<Navigation />}>
+          <Route path="" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/about" element={<About />} />
+        </Route>
+
         <Route
           path="/questions"
           element={
@@ -34,10 +37,11 @@ export default function App() {
           {/* creating an illusion that we have not moved while in the modal */}
           <Route path="create-assignment" element={<Questions />} />
         </Route>
+        <Route path="/task" element={<TaskScreen />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </div>
+    </>
   );
 }
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {

@@ -1,205 +1,135 @@
-import { FileSystemTree, WebContainer } from "@webcontainer/api";
-import React, { useEffect, useRef } from "react";
-import { Terminal } from "xterm";
-import { FitAddon } from "xterm-addon-fit";
-import "xterm/css/xterm.css";
-import "../App.css";
-import Editor from "../editor/Editor";
-import FileStructure from "../file-structure/FileStructure";
-import Header from "../header/Header.1";
-import LoadingScreen from "./LoadingScreen";
-import Preview from "./Preview";
-import PromptComp from "./PromptComp";
-import TerminalComponent from "./TerminalComponent";
-import "../../userWorker";
-import transformFilesFromDb from "../../helpers/replaceUnderScoreWithPoint";
+import useSwr from "swr";
+import { useSearchParams } from "react-router-dom";
+import styles from "./TaskScreen.module.css";
 import {
-  installDependencies,
-  startDevServer,
-} from "../../helpers/bootingWebContainer";
-import { useBoundStore } from "../../store";
+  useSandpack,
+  SandpackProvider,
+  SandpackLayout,
+  SandpackCodeEditor,
+  SandpackPreview,
+} from "@codesandbox/sandpack-react";
+import { autocompletion } from "@codemirror/autocomplete";
 
-type FileTree = {
-  initialFiles: FileSystemTree;
+const fetcher = (...args: string[]) => {
+  return fetch(args[0]).then((res) => res.json());
 };
 
 function TaskScreen() {
-  const [loadingStates, setLoadingStates] = React.useState<string[]>([]);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [indexFromDb, setIndexFromDb] = React.useState<string | undefined>("");
-  const [questionData, setQuestionData] = React.useState<{
-    level: string;
-    prompt: string;
-  }>({ level: "", prompt: "" });
+  const [searchParam] = useSearchParams();
 
-  const [wCInstance, setwContainer] = React.useState<WebContainer | null>(null);
+  const {
+    data,
+    error,
+    isLoading: loadingData,
+  } = useSwr(
+    `${import.meta.env.VITE_SERVER_URL}/tasks?ttkn=${searchParam.get("ttkn")}`,
+    fetcher
+  );
+  const file = {
+    "App.js": {
+      code: ` import React from "react";
+              import ReactMarkdown from 'react-markdown'
+              export default function App() {
+              return (
+                <ReactMarkdown>
+                 # Hello, *world*!
+                </ReactMarkdown>
+                );
+                }`,
+      active: true,
+    },
+    "/public/index.html": {
+      code: `<div id="root"></div>`,
+      active: true,
+    },
+    "index.js": {
+      code: `import React from "react";
+            import ReactDOM from "react-dom";
+            import App from "./App";
+            ReactDOM.render(<App />, document.getElementById("root"));`,
+      active: true,
+    },
+    "index.css": {
+      code: `body {
+              margin: 0;
+              padding: 0;
+              font-family: sans-serif;
+              background-color: #282c34;
+              color: white;
+            }`,
+      active: true,
+    },
 
-  const [files, setFiles] = React.useState<FileTree>();
-
-  const terminalRef = useRef<HTMLDivElement>(null);
-  const iframeEl = useRef<HTMLIFrameElement>(null);
-
-  const fetchFiles = async () => {
-    const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}/questions/6503d849e7f25a9b3fb85d4a`
-    );
-    const data = await response.json();
-    return data;
+    "package.json": {
+      code: `{
+              "dependencies": {
+                "react": "latest",
+                "react-dom": "latest","react-markdown": "latest" 
+              }
+            }`,
+      active: true,
+    },
   };
-  const currentFileState = useBoundStore((state) => state.currentEditableFile);
-  console.log(currentFileState, "currentFileState");
 
-  useEffect(() => {
-    const bootContainer = async () => {
-      try {
-        setLoadingStates((prev) => [...prev, "booting"]);
-        const fitAddon = new FitAddon();
-        // Initialize Terminal
-        const terminal = new Terminal({ convertEol: true });
-        terminal.loadAddon(fitAddon);
-        terminalRef.current && terminal.open(terminalRef.current);
-        fitAddon.fit();
-        terminal.write("Installing dependencies...\r\n");
-
-        // Initialize WebContainer
-        const webcontainerInstance = await WebContainer.boot();
-        setwContainer(webcontainerInstance);
-        // Mount files
-        const filesFromDb = await fetchFiles();
-        setQuestionData({
-          level: filesFromDb.level || "",
-          prompt: filesFromDb.prompt || "",
-        });
-
-        const files = filesFromDb && transformFilesFromDb(filesFromDb);
-
-        setFiles(files);
-        // setIndexFromDb(files.src.directory["App.tsx"].file.contents);
-        files && (await webcontainerInstance.mount(files));
-        // const currentFile = await webcontainerInstance.fs.readFile(
-        //   currentFileState,
-        //   "utf-8"
-        // );
-        // console.log(currentFile);
-        // setIndexFromDb(currentFile);
-        // Install dependencies
-        await installDependencies(
-          terminal,
-          webcontainerInstance,
-          setLoadingStates
-        );
-
-        // Start dev server
-        await startDevServer(
-          terminal,
-          webcontainerInstance,
-          setLoadingStates,
-          iframeEl,
-          setIsLoading
-        );
-      } catch (error) {
-        console.error("Error:", error);
-        setLoadingStates((prev) => [
-          ...prev,
-          "error booting the container! refresh the page.",
-        ]);
-      }
-    };
-
-    bootContainer();
-  }, []);
-
-  useEffect(() => {
-    const currentFile = async () => {
-      const currentFile = await wCInstance?.fs.readFile(
-        currentFileState,
-        "utf-8"
-      );
-      setIndexFromDb(currentFile);
-    };
-    currentFile();
-  }, [currentFileState, wCInstance]);
-
-  async function writeIndexJS(
-    content: string,
-    webcontainerInstance: WebContainer | null
-  ) {
-    setIndexFromDb(content);
-    webcontainerInstance &&
-      (await webcontainerInstance.fs.writeFile(currentFileState, content));
-  }
-  // handle submit
-  //-read all the file from the webcontainer
-  //call the datase and upldate the file with the new content
-  const handleSubmit = async () => {
-    const files = await wCInstance?.fs.readdir("/src");
-    //    ^ is an array of strings
-    // console.log(files);
-    if (files) {
-      const fileContents = await Promise.all(
-        files.map((file) => wCInstance?.fs.readFile(`/src/${file}`, "utf-8"))
-      );
-      // console.log(fileContents);
-      const forSubmission = {
-        initialFiles: {
-          src: {
-            directory: {
-              App_tsx: {
-                file: {
-                  contents: JSON.stringify(fileContents[0]),
-                },
-              },
-              main_tsx: {
-                file: {
-                  contents: JSON.stringify(fileContents[1]),
-                },
-              },
-              index_css: {
-                file: {
-                  contents: JSON.stringify(fileContents[2]),
-                },
-              },
-            },
-          },
-        },
-      };
-      //   const response = await fetch(
-      //           `${import.meta.env.VITE_SERVER_URL}/questions/6503d849e7f25a9b3fb85d4a`,
-      //     {
-      //       method: "PATCH",
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //       body: JSON.stringify(forSubmission),
-      //     }
-      //   );
-      //   console.log( JSON.stringify(forSubmission));
-    }
-  };
-  
+  if (loadingData) return <div>Getting assignment content...</div>;
+  if (error) return <div>Oops, something went wrong, contact us</div>;
   return (
-    <>
-      <LoadingScreen isLoading={false} state={loadingStates} />
-      <div className="container">
-        <div className="question">
-          <button onClick={handleSubmit}>submit test</button>
-          <PromptComp questionData={questionData} />
-          {files && <FileStructure structure={files} path={[]} />}
-        </div>
-        <Header />
-        <div className="content">
-          <Editor
-            indexFromDb={indexFromDb}
-            writeIndexJS={writeIndexJS}
-            wCInstance={wCInstance}
-          />
-
-          <Preview iframeRef={iframeEl} />
-          <TerminalComponent terminalRef={terminalRef} />
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div className={styles["header-container"]}>
+          <p>Hi {data?.name.split(" ")[0]}, welcome to your assignment! </p>
         </div>
       </div>
-    </>
+      <div className={styles["main"]}>
+        <SandpackProvider
+          theme="dark"
+          template="react"
+          files={file}
+          options={{
+            classes: {
+              "sp-wrapper": "custom-wrapper",
+            },
+          }}
+        >
+          <SandpackLayout>
+            <CustomCodeEditor />
+            <SandpackPreview
+              showNavigator
+              className="sandbox-preview"
+              showRefreshButton={false}
+              showOpenInCodeSandbox={false}
+            />
+          </SandpackLayout>
+        </SandpackProvider>
+      </div>
+    </div>
   );
 }
 
 export default TaskScreen;
+
+const CustomCodeEditor = () => {
+  const { sandpack } = useSandpack();
+  const { files } = sandpack;
+  const submit = () => {
+    console.log(files);
+  };
+  return (
+    <div
+      style={{
+        width: "60%",
+        height: "100%",
+      }}
+    >
+      <SandpackCodeEditor
+        showInlineErrors
+        showLineNumbers
+        closableTabs
+        wrapContent
+        className="sandbox-editor"
+        extensions={[autocompletion()]}
+      />
+      <button onClick={submit}>SubmitFiles</button>
+    </div>
+  );
+};

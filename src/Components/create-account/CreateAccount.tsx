@@ -5,9 +5,10 @@ import FormError from "../form-error/FormError";
 import { useState } from "react";
 import axios from "axios";
 import { useBoundStore } from "../../store";
-import EyeOpen from "../icons/EyeOpen";
-import EyeClose from "../icons/EyeClose";
 import Progress from "../icons/Progress";
+import Toggler from "../toggler/Toggler";
+import EyeClose from "../icons/EyeClose";
+import EyeOpen from "../icons/EyeOpen";
 
 interface Inputs {
   name: string;
@@ -16,7 +17,6 @@ interface Inputs {
 }
 
 export default function CreateAccount() {
-  const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
   const setToken = useBoundStore((state) => state.changeToken);
 
@@ -27,6 +27,9 @@ export default function CreateAccount() {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<Inputs>();
+  console.log(errors);
+  console.log(isSubmitting);
+  console.log(register);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     axios
@@ -40,9 +43,6 @@ export default function CreateAccount() {
         setServerError(error.response.data);
         reset({ email: data.email, password: "" });
       });
-  };
-  const toggleShowPassword = () => {
-    setShowPassword((prevState) => !prevState);
   };
 
   return (
@@ -90,21 +90,29 @@ export default function CreateAccount() {
           </div>
           <div className={styles["form-field"]}>
             <label htmlFor="password">Password</label>
-            <div className={styles["toggle-show-password"]}>
-              <input
-                id="password"
-                placeholder={showPassword ? "********" : ""}
-                {...register("password", {
-                  required: true,
-                  minLength: 8,
-                })}
-                type={showPassword ? "text" : "password"}
-                aria-invalid={errors.password ? "true" : "false"}
-              />
-              <button onClick={toggleShowPassword} type="button">
-                {showPassword ? <EyeClose /> : <EyeOpen />}
-              </button>
-            </div>
+            <Toggler>
+              {({ isToggled, setIsToggled }) => (
+                <div className={styles["toggle-show-password"]}>
+                  <input
+                    id="password"
+                    placeholder={isToggled ? "********" : ""}
+                    type={isToggled ? "text" : "password"}
+                    {...register("password", {
+                      required: true,
+                      minLength: 8,
+                    })}
+                    aria-invalid={errors.password ? "true" : "false"}
+                  />
+                  <button
+                    onClick={() => setIsToggled(!isToggled)}
+                    type="button"
+                  >
+                    {isToggled ? <EyeClose /> : <EyeOpen />}
+                  </button>
+                </div>
+              )}
+            </Toggler>
+
             <FormError
               isVisible={errors.password}
               errorMessage={

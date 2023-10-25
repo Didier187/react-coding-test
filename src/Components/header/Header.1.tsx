@@ -7,6 +7,7 @@ import CreateAssignement from "../create-task/CreateAssignment";
 import { Dropdown } from "./Header";
 import ShortList from "../icons/ShortList";
 import AddTask from "../icons/AddTask";
+import Logo from "./Logo";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -18,16 +19,11 @@ export default function Header() {
     navigate(-1);
   };
 
+
   return (
     <div className={styles.container}>
       <div className={styles["layout"]}>
-        <h1
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          Bison.io
-        </h1>
+        <Logo />
         <div className={styles.right}>
           <Link
             to="create-assignment"
@@ -43,7 +39,6 @@ export default function Header() {
             <ShortList />
             Shortlist
           </Link>
-
           <Dropdown />
         </div>
       </div>

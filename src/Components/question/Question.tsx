@@ -15,6 +15,7 @@ const Question = ({ question }: { question: QuestionProps }) => {
   const removeFromShortlist = useBoundStore(
     (state) => state.removeFromShortList
   );
+
   const addQuestionToAssignment = useBoundStore((state) => state.addQuestion);
   const removeQuestionFromAssignment = useBoundStore(
     (state) => state.removeQuestion
@@ -69,11 +70,11 @@ const Question = ({ question }: { question: QuestionProps }) => {
       <div className={styles["question-footer"]}>
         <button
           className={styles["add-question-btn"]}
-          title="Add Question to the assignement"
+          title="Add Question to the assignment"
           onClick={handleAddQuestion}
         >
           {isInAssignment ? <AddedTask /> : <AddTask />}
-          Add Question
+          {isInAssignment ? "Remove " : "Add "} Question
         </button>
         <button
           title="View Question details"

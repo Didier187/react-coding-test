@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  gap: 1em;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 1em;
+}
+.nav-container{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+.main-content{
+    max-width: 800px;
+    margin-inline: auto;
+    height:calc(100vh - 91px);
+    height: calc(100vh - 91px);
+}

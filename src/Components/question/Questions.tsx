@@ -81,6 +81,7 @@ export default function Questions() {
         </div>
       </div>
       <h2>Questions</h2>
+      <p>Click on a question to view details</p>
       <ul>
         {data?.map((question: QuestionProps) => (
           <Question question={question} key={question._id} />

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
 export default function Toggler({
   children,
@@ -8,6 +8,6 @@ export default function Toggler({
     setIsToggled: React.Dispatch<React.SetStateAction<boolean>>;
   }) => JSX.Element;
 }) {
-  const [isToggled, setIsToggled] = useState(true);
+  const [isToggled, setIsToggled] = useState(false);
   return <div>{children({ isToggled, setIsToggled })}</div>;
 }

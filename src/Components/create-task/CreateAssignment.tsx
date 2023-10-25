@@ -29,7 +29,7 @@ export default function CreateAssignement({
   const onSubmit: SubmitHandler<CreateTaskProps> = (data) => {
     axios
       .post(
-        `${import.meta.env.VITE_SERVER_URL}/assignments`,
+        `${import.meta.env.VITE_SERVER_URL}/tasks`,
         {
           ...data,
           assignedQuestion: questions.map((q) => q._id),

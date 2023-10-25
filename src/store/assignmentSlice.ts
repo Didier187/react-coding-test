@@ -1,3 +1,8 @@
+// state to create assignment before sending to a user.
+// starts with an empty array of questions
+// addQuestion adds a question to the array
+// removeQuestion removes a question from the array
+
 import { StateCreator } from "zustand";
 import { QuestionProps } from "../Components/question/Questions";
 

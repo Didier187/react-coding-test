@@ -24,10 +24,11 @@ a:hover {
   color: #535bf2;
 }
 
-body  {
-  box-sizing: border-box;
+body {
   margin: 0;
   padding: 0;
+  height: 100dvh;
+  height: 100vh;
 }
 
 h1 {
@@ -222,4 +223,15 @@ button:focus-visible {
   width: calc(100% - 2em);
   margin-left: auto;
   border-left: 1px solid #646cff;
+}
+.custom-wrapper {
+  width: 100% !important;
+}
+.sandbox-editor{
+  height: 100%;
+  min-height: 800px;
+}
+.sandbox-preview{
+  height: 100%;
+  min-height: 800px;
 }

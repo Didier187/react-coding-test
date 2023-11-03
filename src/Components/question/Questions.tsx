@@ -27,7 +27,7 @@ export default function Questions() {
     { level: "Intermediate" },
     { level: "Advanced" },
   ];
-  
+
   const token = useBoundStore((state) => state.token);
 
   const questionUrl =
@@ -45,9 +45,10 @@ export default function Questions() {
   };
 
   if (isLoading) return <div>loading...</div>;
-  if (error) return <div>error...</div>;
+  if (error) return <div>error getting the questions...</div>;
   return (
     <div className={styles["questions-page"]}>
+     
       <div className={styles.filters}>
         <strong>
           <Filter /> Filter by

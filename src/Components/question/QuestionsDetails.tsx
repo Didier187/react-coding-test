@@ -2,14 +2,14 @@ import { Navigate, useParams } from "react-router-dom";
 import useSwr from "swr";
 import { useBoundStore } from "../../store";
 import styles from "./Questions.module.css";
-import PreviewFileStructure from "./PreviewFileStructure";
-import useQuestionPreviewStandalone from "../../store/questionPreviewStandalone";
-import AceEditor from "react-ace";
+import { Sandpack } from "@codesandbox/sandpack-react";
+
 import "ace-builds/src-noconflict/ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import AddedTask from "../icons/AddedTask";
 import AddTask from "../icons/AddTask";
+
 type Args = [string, { "x-auth-token": string }] & URL & HeadersInit;
 
 const fetcher = (...args: Array<Args>) => {
@@ -45,9 +45,6 @@ export default function QuestionsDetails() {
     }
   };
 
-  const currentFile = useQuestionPreviewStandalone(
-    (state) => state.currentFileContents
-  );
   const isInAssignment = questions.some((item) => item._id === data?._id);
 
   if (isLoading) return <div>loading...</div>;
@@ -85,36 +82,16 @@ export default function QuestionsDetails() {
         <div dangerouslySetInnerHTML={{ __html: data?.prompt }} />
       </div>
       <h2 className={styles.headline}>Starter files</h2>
-      <div className={styles["file-preview"]}>
-        <div className={styles["question-files"]}>
-          <PreviewFileStructure structure={data?.initialFiles} path={[]} />
-        </div>
-        <div className={styles["question-file-contents"]}>
-          <Editor currentFile={currentFile} />
-        </div>
-      </div>
+      <Sandpack
+        template="react"
+        files={data.files}
+        theme={"auto"}
+        options={{
+          showLineNumbers: true,
+          readOnly: true,
+          wrapContent:true
+        }}
+      />
     </div>
   );
 }
-
-const Editor = ({ currentFile }: { currentFile: string }) => {
-  return (
-    <AceEditor
-      mode="javascript"
-      theme="monokai"
-      name="code-preview"
-      fontSize={13}
-      showPrintMargin={false}
-      showGutter={true}
-      highlightActiveLine={true}
-      value={currentFile}
-      style={{ width: "100%", height: "100%" }}
-      setOptions={{
-        showLineNumbers: true,
-        tabSize: 2,
-        blockScrolling: Infinity,
-      }}
-      readOnly={true}
-    />
-  );
-};

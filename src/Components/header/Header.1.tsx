@@ -8,6 +8,7 @@ import { Dropdown } from "./Header";
 import ShortList from "../icons/ShortList";
 import AddTask from "../icons/AddTask";
 import Logo from "./Logo";
+import Received from "../icons/Received";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ export default function Header() {
     setIsModalOpen(false);
     navigate(-1);
   };
-
 
   return (
     <div className={styles.container}>
@@ -38,6 +38,10 @@ export default function Header() {
           <Link to="/questions/shortlist">
             <ShortList />
             Shortlist
+          </Link>
+          <Link to="/submissions-tasks">
+            <Received />
+            Submissions
           </Link>
           <Dropdown />
         </div>

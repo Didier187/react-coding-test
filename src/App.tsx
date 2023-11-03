@@ -11,6 +11,8 @@ import ShortList from "./Components/shortlist/ShortList";
 import { useBoundStore } from "./store";
 import TaskScreen from "./Components/task/TaskScreen";
 import Home from "./Components/home/Home";
+import Submissions from "./Components/submission/Submissions";
+import SubmissionDetails from "./Components/submission/SubmissionDetails";
 
 export default function App() {
   return (
@@ -34,9 +36,21 @@ export default function App() {
           <Route path="" index element={<Questions />} />
           <Route path=":id" element={<QuestionsDetails />} />
           <Route path="shortlist" element={<ShortList />} />
-          {/* creating an illusion that we have not moved while in the modal */}
+          {/* creating an illusion that we have not moved while in the modal TO DO: fix this no need anymore */}
           <Route path="create-assignment" element={<Questions />} />
         </Route>
+        <Route
+          path="submissions-tasks"
+          element={
+            <PrivateRoute>
+              <MainFrame />
+            </PrivateRoute>
+          }
+        >
+          <Route path="" index element={<Submissions />} />
+          <Route path=":id" element={<SubmissionDetails />} />
+        </Route>
+
         <Route path="/task" element={<TaskScreen />} />
 
         <Route path="*" element={<NotFound />} />

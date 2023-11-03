@@ -1,4 +1,3 @@
-import useSwr from "swr";
 import { useSearchParams } from "react-router-dom";
 import styles from "./TaskScreen.module.css";
 import {
@@ -8,128 +7,138 @@ import {
   SandpackCodeEditor,
   SandpackPreview,
 } from "@codesandbox/sandpack-react";
-import { autocompletion } from "@codemirror/autocomplete";
+import axios from "axios";
+import useTaskStore from "../../store/taskStore";
+import { ReactNode, useEffect } from "react";
+import Done from "../icons/Done";
 
-const fetcher = (...args: string[]) => {
-  return fetch(args[0]).then((res) => res.json());
-};
-
-function TaskScreen() {
+function Task() {
   const [searchParam] = useSearchParams();
+  const fetchTask = useTaskStore((state) => state.fetch);
+  const assignment = useTaskStore((state) => state.assignment);
+  const { sandpack } = useSandpack();
+  const { files } = sandpack;
 
-  const {
-    data,
-    error,
-    isLoading: loadingData,
-  } = useSwr(
-    `${import.meta.env.VITE_SERVER_URL}/tasks?ttkn=${searchParam.get("ttkn")}`,
-    fetcher
-  );
-  const file = {
-    "App.js": {
-      code: ` import React from "react";
-              import ReactMarkdown from 'react-markdown'
-              export default function App() {
-              return (
-                <ReactMarkdown>
-                 # Hello, *world*!
-                </ReactMarkdown>
-                );
-                }`,
-      active: true,
-    },
-    "/public/index.html": {
-      code: `<div id="root"></div>`,
-      active: true,
-    },
-    "index.js": {
-      code: `import React from "react";
-            import ReactDOM from "react-dom";
-            import App from "./App";
-            ReactDOM.render(<App />, document.getElementById("root"));`,
-      active: true,
-    },
-    "index.css": {
-      code: `body {
-              margin: 0;
-              padding: 0;
-              font-family: sans-serif;
-              background-color: #282c34;
-              color: white;
-            }`,
-      active: true,
-    },
+  useEffect(() => {
+    fetchTask(searchParam.get("ttkn"));
+  }, [searchParam, fetchTask]);
 
-    "package.json": {
-      code: `{
-              "dependencies": {
-                "react": "latest",
-                "react-dom": "latest","react-markdown": "latest" 
-              }
-            }`,
-      active: true,
-    },
+  const handleSubmitAssignment = async () => {
+    if (!assignment) return;
+
+    const submittable = assignment.assignedQuestion[0];
+    const forSubmisson = {
+      assignedQuestion: [
+        {
+          level: submittable.level,
+          prompt: submittable.prompt,
+          _id: submittable._id,
+          files: {
+            ...files,
+          },
+        },
+      ],
+    };
+
+    console.log(forSubmisson);
+    axios
+      .post(
+        `${import.meta.env.VITE_SERVER_URL}/tasks/submit/${assignment._id}`,
+        {
+          assignedQuestion: [
+            {
+              level: submittable.level,
+              prompt: submittable.prompt,
+              _id: submittable._id,
+              files: {
+                ...files,
+              },
+            },
+          ],
+        }
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
-  if (loadingData) return <div>Getting assignment content...</div>;
-  if (error) return <div>Oops, something went wrong, contact us</div>;
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles["header-container"]}>
-          <p>Hi {data?.name.split(" ")[0]}, welcome to your assignment! </p>
+          <p>
+            Hi {assignment?.name.split(" ")[0]}, welcome to your assignment!{" "}
+          </p>
+          <button
+            onClick={async () => {
+              await handleSubmitAssignment();
+            }}
+          >
+            <Done />
+            Submit
+          </button>
         </div>
       </div>
       <div className={styles["main"]}>
-        <SandpackProvider
-          theme="dark"
-          template="react"
-          files={file}
-          options={{
-            classes: {
-              "sp-wrapper": "custom-wrapper",
-            },
+        <SandpackLayout
+          style={{
+            width: "100%",
           }}
         >
-          <SandpackLayout>
-            <CustomCodeEditor />
-            <SandpackPreview
-              showNavigator
-              className="sandbox-preview"
-              showRefreshButton={false}
-              showOpenInCodeSandbox={false}
-            />
-          </SandpackLayout>
-        </SandpackProvider>
+          <SandpackCodeEditor
+            showInlineErrors
+            showLineNumbers
+            closableTabs
+            wrapContent
+            className="sandbox-editor"
+          />
+          <SandpackPreview
+            showNavigator
+            className="sandbox-preview"
+            showRefreshButton={false}
+            showOpenInCodeSandbox={false}
+          />
+        </SandpackLayout>
       </div>
     </div>
   );
 }
+const TaskScreen = () => {
+  return (
+    <SandBoxProviderWrapper>
+      <Task />
+    </SandBoxProviderWrapper>
+  );
+};
 
 export default TaskScreen;
 
-const CustomCodeEditor = () => {
-  const { sandpack } = useSandpack();
-  const { files } = sandpack;
-  const submit = () => {
-    console.log(files);
-  };
+const SandBoxProviderWrapper = ({ children }: { children: ReactNode }) => {
+  const [searchParam] = useSearchParams();
+  const fetchTask = useTaskStore((state) => state.fetch);
+  const assignment = useTaskStore((state) => state.assignment);
+
+  useEffect(() => {
+    fetchTask(searchParam.get("ttkn"));
+  }, [searchParam, fetchTask]);
+
   return (
-    <div
-      style={{
-        width: "60%",
-        height: "100%",
-      }}
-    >
-      <SandpackCodeEditor
-        showInlineErrors
-        showLineNumbers
-        closableTabs
-        wrapContent
-        className="sandbox-editor"
-        extensions={[autocompletion()]}
-      />
-      <button onClick={submit}>SubmitFiles</button>
-    </div>
+    <>
+      <SandpackProvider
+        theme="dark"
+        template="react"
+        files={assignment?.assignedQuestion[0]?.files}
+        options={{
+          classes: {
+            "sp-wrapper": "custom-wrapper",
+          },
+        }}
+      >
+        {children}
+      </SandpackProvider>
+    </>
   );
 };

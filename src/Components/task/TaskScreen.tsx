@@ -11,11 +11,15 @@ import axios from "axios";
 import useTaskStore from "../../store/taskStore";
 import { ReactNode, useEffect } from "react";
 import Done from "../icons/Done";
+import Submitted from "./Submitted";
+import FullscreenLoader from "../General/FullscreenLoader";
 
 function Task() {
   const [searchParam] = useSearchParams();
   const fetchTask = useTaskStore((state) => state.fetch);
   const assignment = useTaskStore((state) => state.assignment);
+  const error = useTaskStore((state) => state.error);
+  const isFetching = useTaskStore((state) => state.isFetching);
   const { sandpack } = useSandpack();
   const { files } = sandpack;
 
@@ -27,20 +31,7 @@ function Task() {
     if (!assignment) return;
 
     const submittable = assignment.assignedQuestion[0];
-    const forSubmisson = {
-      assignedQuestion: [
-        {
-          level: submittable.level,
-          prompt: submittable.prompt,
-          _id: submittable._id,
-          files: {
-            ...files,
-          },
-        },
-      ],
-    };
 
-    console.log(forSubmisson);
     axios
       .post(
         `${import.meta.env.VITE_SERVER_URL}/tasks/submit/${assignment._id}`,
@@ -58,13 +49,16 @@ function Task() {
         }
       )
       .then(function (response) {
+        // TODO notify the user of success
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
+        // TODO notify the user of the error
       });
   };
-
+  if (isFetching) return <FullscreenLoader />;
+  if (error) return <Submitted message={error} />;
   return (
     <div className={styles.container}>
       <div className={styles.header}>

@@ -12,6 +12,7 @@ const Question = ({ question }: { question: QuestionProps }) => {
   const navigate = useNavigate();
 
   const addToShortlist = useBoundStore((state) => state.addToShortList);
+  
   const removeFromShortlist = useBoundStore(
     (state) => state.removeFromShortList
   );

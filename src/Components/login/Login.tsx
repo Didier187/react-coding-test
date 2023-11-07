@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useBoundStore } from "../../store";
@@ -16,36 +16,8 @@ interface LoginProps {
 
 export default function Login() {
   const [serverError, setServerError] = useState("");
-  const token = useBoundStore((state) => state.token);
-
   const setToken = useBoundStore((state) => state.changeToken);
   const navigate = useNavigate();
-  const valideToken = async () => {
-    return await axios.get(`${import.meta.env.VITE_SERVER_URL}/auth/validate`, {
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-  };
-
-  useEffect(() => {
-    //fetch token and see if it's valid
-    if (token) {
-      valideToken()
-        .then((response) => {
-          if (response.name === "TokenExpiredError") {
-            setToken("");
-            navigate("/login");
-          } else {
-            navigate("/questions");
-          }
-        })
-        .catch((error) => {
-          console.log("error", error);
-          setToken("");
-        });
-    }
-  }, [token, navigate, setToken]);
 
   const {
     register,
@@ -59,7 +31,6 @@ export default function Login() {
       .post(`${import.meta.env.VITE_SERVER_URL}/auth`, data)
       .then((response) => {
         setToken(response.data);
-        reset();
         navigate("/questions");
       })
       .catch((error) => {

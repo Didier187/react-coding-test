@@ -13,6 +13,7 @@ import TaskScreen from "./Components/task/TaskScreen";
 import Home from "./Components/home/Home";
 import Submissions from "./Components/submission/Submissions";
 import SubmissionDetails from "./Components/submission/SubmissionDetails";
+import { useEffect } from "react";
 
 export default function App() {
   return (
@@ -59,8 +60,13 @@ export default function App() {
   );
 }
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = useBoundStore((state) => state.token);
-  if (!token) {
+  const validToken = useBoundStore((state) => state.validateToken);
+  const valid = useBoundStore((state) => state.validLogin);
+  useEffect(() => {
+    validToken();
+  }, [validToken]);
+
+  if (valid.name === "TokenExpiredError" || valid.name === "JsonWebTokenError") {
     return <Navigate to={"/login"} replace />;
   }
   return children;

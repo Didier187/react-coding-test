@@ -71,3 +71,22 @@
 .task-details-container {
   min-width: 300px;
 }
+/* submitted styles */
+.submitted-container{
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+.submitted-container div{
+  display: flex;
+  flex-direction: column;
+  align-items:center ;
+  gap:1em;
+  padding: 1em;
+  text-align: center;
+}
+.submitted-container div span{
+  font-size: 3rem;
+  color: #646cff;
+}

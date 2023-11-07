@@ -9,7 +9,7 @@ interface TaskStoreState {
   activeTask: number;
   setActiveTask: (task: number) => void;
 
-  isfetching: boolean;
+  isFetching: boolean;
   error: string | null;
   fetch: (token: string | null) => Promise<void>;
   assignment: {
@@ -33,7 +33,7 @@ const useTaskStore = create<TaskStoreState>()(
     persist(
       (set, get) => ({
         successfullyFetched: false,
-        isfetching: false,
+        isFetching: false,
         assignment: null,
         error: null,
         activeTask: 0,
@@ -52,7 +52,7 @@ const useTaskStore = create<TaskStoreState>()(
         fetch: async (token: string | null) => {
           if (get().successfullyFetched) return;
           set({
-            isfetching: true,
+            isFetching: true,
           });
 
           const response = await fetch(
@@ -63,21 +63,28 @@ const useTaskStore = create<TaskStoreState>()(
             set({
               error: "Invalid token",
               successfullyFetched: false,
-              isfetching: false,
+              isFetching: false,
             });
           }
           if (response.status === 404) {
             set({
               error: "No task found",
               successfullyFetched: false,
-              isfetching: false,
+              isFetching: false,
             });
           }
           if (response.status === 500) {
             set({
               error: "Server error",
               successfullyFetched: false,
-              isfetching: false,
+              isFetching: false,
+            });
+          }
+          if (response.status === 400) {
+            set({
+              error: "This task have been submitted!",
+              successfullyFetched: false,
+              isFetching: false,
             });
           }
           if (response.status === 200) {
@@ -85,7 +92,7 @@ const useTaskStore = create<TaskStoreState>()(
               assignment: await response.json(),
               error: null,
               successfullyFetched: true,
-              isfetching: false,
+              isFetching: false,
             });
           }
         },

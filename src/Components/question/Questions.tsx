@@ -43,12 +43,11 @@ export default function Questions() {
   const resetSearchParams = () => {
     setSearchParams("");
   };
-
+  
   if (isLoading) return <div>loading...</div>;
   if (error) return <div>error getting the questions...</div>;
   return (
     <div className={styles["questions-page"]}>
-     
       <div className={styles.filters}>
         <strong>
           <Filter /> Filter by

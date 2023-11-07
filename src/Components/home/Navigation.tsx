@@ -1,8 +1,19 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Logo from "../header/Logo";
 import styles from "./Home.module.css";
+import { useBoundStore } from "../../store";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const alreadyLoggedIn = useBoundStore((state) => state.validLogin);
+  const handleAcountClick = () => {
+    if (alreadyLoggedIn) {
+      navigate("/questions");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <div>
       <div className={styles.container}>
@@ -13,7 +24,7 @@ export default function Home() {
               <Link to="/about">About</Link>
             </li>
             <li>
-              <Link to="/login">Account</Link>
+              <button onClick={handleAcountClick}>Account</button>
             </li>
           </ul>
         </nav>

@@ -1,0 +1,43 @@
+.page {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 800px;
+  padding-top: 3em;
+}
+.card {
+  all: unset;
+  display: block;
+  margin: 20px 0;
+  padding: 20px;
+  border: 0.5px solid #464444;
+  transition: all 0.3s ease-in-out;
+  width: -webkit-fill-available;
+  border-radius: 4px;
+}
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pending {
+  color: #f0ad4e;
+  padding: 0.6rem;
+  border-radius: 4px;
+  background-color: #464444;
+}
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.tabs button {
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.tabs button.active {
+  background-color: #464444;
+}
+.tabs button:hover {
+  background-color: #292828;
+}

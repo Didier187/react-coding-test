@@ -5,6 +5,7 @@ import Question from "./Question";
 import styles from "./Questions.module.css";
 import Filter from "../icons/Filter";
 import Clear from "../icons/Clear";
+import Loading from "./Loading";
 
 type Args = [string, { "x-auth-token": string }] & URL & HeadersInit;
 
@@ -44,10 +45,10 @@ export default function Questions() {
     setSearchParams("");
   };
   
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loading/>;
   if (error) return <div>error getting the questions...</div>;
   return (
-    <div className={styles["questions-page"]}>
+    <div className={styles["page"]}>
       <div className={styles.filters}>
         <strong>
           <Filter /> Filter by

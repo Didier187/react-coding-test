@@ -17,12 +17,15 @@
     "react-ace": "^10.1.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.2",
+    "react-loading-skeleton": "^3.3.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.16.0",
     "swr": "^2.2.2",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-modal": "^3.16.1",

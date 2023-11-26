@@ -1,4 +1,4 @@
-.questions-page {
+.page {
   margin: 0 auto;
   padding: 0;
   max-width: 800px;
@@ -15,9 +15,17 @@
   width: -webkit-fill-available;
   border-radius: 4px;
 }
+.question-loading {
+  border: 1px solid transparent;
+}
 .question:hover {
   cursor: pointer;
   background-color: #292828;
+}
+.question-loading:hover {
+  cursor: default;
+  pointer-events: none;
+  background-color: #373737;
 }
 .question-header {
   display: flex;
@@ -62,7 +70,8 @@ span[datatype="highlighted"] {
   align-items: center;
   gap: 1em;
 }
-.filter-btn {
+.filter-btn,
+.filter-btn-muted {
   border: 2px solid plum;
   padding: 0.5em 1em;
   border-radius: 4px;
@@ -72,6 +81,14 @@ span[datatype="highlighted"] {
   gap: 0.5em;
   transition: all 0.25s ease-in-out;
   text-align: center;
+}
+.filter-btn-muted {
+  border: 2px solid transparent;
+}
+/* remove the hover effect from muted btn */
+.filter-btn-muted:hover {
+  border: 2px solid #373737;
+  cursor: default;
 }
 .reset-filter-btn {
   color: white;
@@ -90,7 +107,9 @@ span[datatype="highlighted"] {
 .reset-filter-btn:hover {
   border: 2px solid #4d53ca;
 }
-.filter-btn::after {
+.filter-btn::after,
+.filter-btn-muted::after,
+.filter-active::after {
   content: "";
   display: block;
   width: 0.5em;
@@ -102,12 +121,7 @@ span[datatype="highlighted"] {
   background-color: #4d53ca;
 }
 .filter-active::after {
-  content: "";
-  display: block;
-  width: 0.5em;
-  height: 0.5em;
   background-color: white;
-  border-radius: 50%;
 }
 .question h3 {
   margin: 0;
@@ -161,24 +175,7 @@ ul {
 .Advanced {
   border-color: #f44336;
 }
-.file-preview {
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-template-columns: min-content 1fr;
-  grid-template-rows: 1fr;
-  min-height: 400px;
-  grid-template-areas: "files content";
-}
-.question-files {
-  grid-area: files;
-  display: flex;
-}
-.question-file-contents {
-  grid-area: content;
-  height: 100%;
-  width: -webkit-fill-available;
-  display: flex;
-}
+
 #code-preview {
   width: 100%;
   width: -webkit-fill-available;

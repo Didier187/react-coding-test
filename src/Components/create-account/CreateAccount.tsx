@@ -27,9 +27,6 @@ export default function CreateAccount() {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<Inputs>();
-  console.log(errors);
-  console.log(isSubmitting);
-  console.log(register);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     axios

@@ -12,7 +12,7 @@ import useTaskStore from "../../store/taskStore";
 import { ReactNode, useEffect } from "react";
 import Done from "../icons/Done";
 import Submitted from "./Submitted";
-import FullscreenLoader from "../General/FullscreenLoader";
+import Loading from "./Loading";
 
 function Task() {
   const [searchParam] = useSearchParams();
@@ -54,10 +54,11 @@ function Task() {
       })
       .catch(function (error) {
         console.log(error);
+       
         // TODO notify the user of the error
       });
   };
-  if (isFetching) return <FullscreenLoader />;
+  if (isFetching) return <Loading />;
   if (error) return <Submitted message={error} />;
   return (
     <div className={styles.container}>

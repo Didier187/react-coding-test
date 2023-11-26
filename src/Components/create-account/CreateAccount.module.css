@@ -3,7 +3,10 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: calc(100dvh - 91px);
+  height: calc(100dvh - 91px);
+  height: calc(100vh - 91px);
+  height: calc(100vh - 91px);
 }
 .form-page h1 {
   font-size: 2rem;

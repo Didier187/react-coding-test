@@ -64,10 +64,21 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const valid = useBoundStore((state) => state.validLogin);
   useEffect(() => {
     validToken();
-  }, [validToken]);
+  }, []);
 
-  if (valid.name === "TokenExpiredError" || valid.name === "JsonWebTokenError") {
-    return <Navigate to={"/login"} replace />;
+  if (
+    valid.name === "JsonWebTokenError" ||
+    valid.name === "TokenExpiredError" ||
+    !valid
+  ) {
+    return (
+      <Navigate
+        to={"/login"}
+        state={{
+          from: window.location.pathname,
+        }}
+      />
+    );
   }
   return children;
 };

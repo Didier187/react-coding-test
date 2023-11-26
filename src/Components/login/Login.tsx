@@ -4,11 +4,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useBoundStore } from "../../store";
 import FormError from "../form-error/FormError";
-import styles from "./Login.module.css";
-import Progress from "../icons/Progress";
-import Toggler from "../toggler/Toggler";
 import EyeClose from "../icons/EyeClose";
 import EyeOpen from "../icons/EyeOpen";
+import Progress from "../icons/Progress";
+import Toggler from "../toggler/Toggler";
+import styles from "./Login.module.css";
 interface LoginProps {
   email: string;
   password: string;
@@ -30,8 +30,10 @@ export default function Login() {
     axios
       .post(`${import.meta.env.VITE_SERVER_URL}/auth`, data)
       .then((response) => {
-        setToken(response.data);
-        navigate("/questions");
+        if (response.data) {
+          setToken(response.data);
+          navigate("/questions");
+        }
       })
       .catch((error) => {
         setServerError(error.response.data);
@@ -79,6 +81,7 @@ export default function Login() {
                       required: true,
                       minLength: 8,
                     })}
+                    autoComplete="current-password"
                     aria-invalid={errors.password ? "true" : "false"}
                   />
                   <button

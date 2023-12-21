@@ -18,8 +18,9 @@
   background-color: hsl(0, 0%, 100%);
   --filter-btn: rgb(90, 226, 131);
   --filter-btn-hover: hsla(138, 57.57%, 42.28%, 1);
-  --box-shadow:rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   --border-radius-default: 4px;
+  --text-color: #2b2839;
 }
 /* For WebKit (Chrome, Safari) */
 ::-webkit-scrollbar {

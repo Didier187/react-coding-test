@@ -38,9 +38,12 @@ export const Dropdown = () => {
         <div className={styles["dropdown-content"]}>
           <div className={styles["user-details"]}>
             {currentUser && (
-              <span className={styles.name}>{currentUser.name}</span>
+              <span className={styles.name}>
+                👋, <strong>{currentUser.name}</strong>
+              </span>
             )}
             <br />
+
             <span className={styles.email}>
               {currentUser && currentUser.email}
             </span>

@@ -1,3 +1,3 @@
 export default function Clear() {
-  return <span className="material-symbols-outlined">clear</span>;
+  return <span className="material-symbols-outlined">restart_alt</span>;
 }

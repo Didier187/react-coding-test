@@ -27,6 +27,12 @@
   border-radius:  var(--border-radius-default);
   background-color: #464444;
 }
+.filters{
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  border: 2px soldi red;
+}
 .tabs {
   display: flex;
   align-items: center;
@@ -44,6 +50,22 @@
 }
 .tabs button:hover {
   background-color: #292828;
+}
+.date-filters{
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+.filter-btn-date{
+ background-color: transparent;
+ color: var(--text-color);
+ padding: 1px;
+border: none;
+}
+.filter-btn-date:hover{
+  background-color: transparent;
+  color: var(--filter-btn-hover);
+  border:0px solid transparent;
 }
 /* loading */
 .cards {

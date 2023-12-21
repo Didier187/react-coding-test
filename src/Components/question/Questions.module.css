@@ -10,17 +10,17 @@
   display: block;
   margin: 20px 0;
   padding: 20px;
-  border: 0.5px solid #464444;
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease-in-out;
-  width: -webkit-fill-available;
-  border-radius: 4px;
+  border-radius:  var(--border-radius-default);
+  box-shadow: var(--box-shadow);
 }
 .question-loading {
   border: 1px solid transparent;
 }
 .question:hover {
   cursor: pointer;
-  background-color: #292828;
+  background-color: var(--card-hover);
 }
 .question-loading:hover {
   cursor: default;
@@ -50,9 +50,7 @@
 .question-header button:focus {
   outline: none;
 }
-span[datatype="highlighted"] {
-  color: plum;
-}
+
 .filters {
   display: flex;
   align-items: center;
@@ -70,11 +68,21 @@ span[datatype="highlighted"] {
   align-items: center;
   gap: 1em;
 }
+.filter-btn {
+  background-color: var(--filter-btn);
+}
+.filter-active {
+  background-color: var(--filter-btn-hover);
+}
+.filter-btn:hover {
+  background-color: var(--filter-btn-hover);
+  border: 2px solid transparent;
+}
 .filter-btn,
 .filter-btn-muted {
-  border: 2px solid plum;
+  border: 2px solid transparent;
   padding: 0.5em 1em;
-  border-radius: 4px;
+  border-radius: 40px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -87,7 +95,7 @@ span[datatype="highlighted"] {
 }
 /* remove the hover effect from muted btn */
 .filter-btn-muted:hover {
-  border: 2px solid #373737;
+  border: 2px solid transparent;
   cursor: default;
 }
 .reset-filter-btn {
@@ -105,24 +113,13 @@ span[datatype="highlighted"] {
   border: 2px solid transparent;
 }
 .reset-filter-btn:hover {
-  border: 2px solid #4d53ca;
+  border: 2px solid var(--filter-btn-hover);
 }
-.filter-btn::after,
-.filter-btn-muted::after,
-.filter-active::after {
-  content: "";
-  display: block;
-  width: 0.5em;
-  height: 0.5em;
-  background-color: transparent;
-  border-radius: 50%;
-}
+
 .filter-active {
-  background-color: #4d53ca;
+  background-color: var(--filter-btn-hover);
 }
-.filter-active::after {
-  background-color: white;
-}
+
 .question h3 {
   margin: 0;
   padding: 0;
@@ -152,7 +149,7 @@ span[datatype="highlighted"] {
   justify-content: center;
   align-items: center;
   gap: 0.5em;
-  border-radius: 4px;
+  border-radius:  var(--border-radius-default);
 }
 ul {
   list-style: none;
@@ -164,7 +161,7 @@ ul {
   color: #999;
   border: 2px solid transparent;
   padding: 0.5em;
-  border-radius: 4px;
+  border-radius:  var(--border-radius-default);
 }
 .Beginner {
   border-color: #4caf50;
@@ -192,7 +189,7 @@ ul {
 .detail-add-btn {
   border: 2px solid transparent;
   padding: 0.5em 1em;
-  border-radius: 4px;
+  border-radius:  var(--border-radius-default);
   cursor: pointer;
   display: flex;
   align-items: center;

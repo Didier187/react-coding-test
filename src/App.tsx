@@ -64,7 +64,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const valid = useBoundStore((state) => state.validLogin);
   useEffect(() => {
     validToken();
-  }, []);
+  }, [validToken]);
 
   if (
     valid.name === "JsonWebTokenError" ||

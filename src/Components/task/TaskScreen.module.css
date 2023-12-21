@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border-bottom: 1px solid #333232;
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 3em;
   height: 50px;
 }
@@ -17,15 +17,15 @@
   justify-content: space-between;
 }
 .header-container button {
-  background-color: #646cff;
-  border-radius: 4px;
+  background-color: var(--primary);
+  border-radius:  var(--border-radius-default);
   display: flex;
   align-items: center;
   gap: 0.5em;
   transition: all 0.3 ease-in;
 }
 .header-container button:hover {
-  color: #646cff;
+  color: var(--primary-hover);
   background-color: #ffffff;
 }
 .question-togglers {
@@ -35,31 +35,32 @@
   align-items: flex-start;
 }
 .main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% 4fr;
   max-width: 1800px;
   margin: 0 auto;
 }
-.editor-area {
-  width: 100%;
-  display: flex;
+.main > * {
+  border: 1px solid var(--border-color);
+  border-right: none;
+  max-width: unset !important;
 }
-.editor-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-bottom: 1px solid #333232;
-  padding: 5px;
-  gap: 5px;
+
+.main > div button {
+  border: unset;
+  padding: unset;
+  font-size: unset;
+  font-weight: unset;
+  font-family: unset;
+  cursor:pointer;
+  transition: unset;
+  background-color: unset;
+  color: unset;
+  border-radius: unset;
 }
-.editor-header span.material-symbols-outlined {
-  font-size: 40px !important;
-}
-.editor-header span {
-  font-size: 0.8em;
-  font-weight: 600;
-}
+
 /* loading screen */
-.sandbox-container{
+.sandbox-container {
   display: flex;
   flex-direction: row;
   gap: 1em;
@@ -68,25 +69,22 @@
   margin-inline: auto;
 }
 
-.task-details-container {
-  min-width: 300px;
-}
 /* submitted styles */
-.submitted-container{
+.submitted-container {
   display: flex;
   height: 100vh;
   align-items: center;
   justify-content: center;
 }
-.submitted-container div{
+.submitted-container div {
   display: flex;
   flex-direction: column;
-  align-items:center ;
-  gap:1em;
+  align-items: center;
+  gap: 1em;
   padding: 1em;
   text-align: center;
 }
-.submitted-container div span{
+.submitted-container div span {
   font-size: 3rem;
-  color: #646cff;
+  color: var(--primary);
 }

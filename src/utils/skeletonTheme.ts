@@ -4,6 +4,6 @@ interface themeI {
 }
 
 export const theme: themeI = {
-  baseColor: "#373737",
-  highlightColor: "#333333",
+  baseColor: "",
+  highlightColor: "",
 };

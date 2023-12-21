@@ -3,27 +3,17 @@ import { useBoundStore } from "../../store";
 import AddTask from "../icons/AddTask";
 import AddedTask from "../icons/AddedTask";
 import EyeOpen from "../icons/EyeOpen";
-import HeartHighlighted from "../icons/HeartHighlighted";
-import HeartNeutral from "../icons/HeartNeutral";
 import { QuestionProps } from "./Questions";
 import styles from "./Questions.module.css";
 
 const Question = ({ question }: { question: QuestionProps }) => {
   const navigate = useNavigate();
-  const addToShortlist = useBoundStore((state) => state.addToShortList);
-
-  const removeFromShortlist = useBoundStore(
-    (state) => state.removeFromShortList
-  );
 
   const addQuestionToAssignment = useBoundStore((state) => state.addQuestion);
   const removeQuestionFromAssignment = useBoundStore(
     (state) => state.removeQuestion
   );
   const questions = useBoundStore((state) => state.questions);
-
-  const shortList = useBoundStore((state) => state.shortList);
-  const isFavorite = shortList.some((item) => item._id === question._id);
   const isInAssignment = questions.some((item) => item._id === question._id);
 
   const handleAddAndRemove = (
@@ -38,13 +28,6 @@ const Question = ({ question }: { question: QuestionProps }) => {
           removeQuestionFromAssignment(question._id);
         } else {
           addQuestionToAssignment(question);
-        }
-        break;
-      case "shortlist":
-        if (shortList.includes(question)) {
-          removeFromShortlist(question);
-        } else {
-          addToShortlist(question);
         }
         break;
       default:
@@ -66,12 +49,6 @@ const Question = ({ question }: { question: QuestionProps }) => {
         >
           {question.level}
         </span>
-        <button
-          onClick={(e) => handleAddAndRemove(e, "shortlist")}
-          title={isFavorite ? "Remove from shortlist" : "Add to shortlist"}
-        >
-          {isFavorite ? <HeartHighlighted /> : <HeartNeutral />}
-        </button>
       </div>
       <div dangerouslySetInnerHTML={{ __html: question.prompt }} />
       <div className={styles["question-footer"]}>

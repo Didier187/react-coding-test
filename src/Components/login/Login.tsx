@@ -30,7 +30,7 @@ export default function Login() {
     axios
       .post(`${import.meta.env.VITE_SERVER_URL}/auth`, data)
       .then((response) => {
-        if (response.data) {
+        if (response.status === 200) {
           setToken(response.data);
           navigate("/questions");
         }

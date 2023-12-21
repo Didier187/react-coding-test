@@ -20,6 +20,7 @@
     "react-loading-skeleton": "^3.3.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.16.0",
+    "sandpack-file-explorer": "^0.0.7",
     "swr": "^2.2.2",
     "zustand": "^4.4.1"
   },

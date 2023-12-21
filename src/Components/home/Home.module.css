@@ -7,14 +7,54 @@
   margin-inline: auto;
   padding: 1em;
 }
-.nav-container{
-    display: flex;
-    gap: 1em;
-    align-items: center;
+.nav-container {
+  display: flex;
+  gap: 1em;
+  align-items: center;
 }
-.main-content{
-    max-width: 800px;
-    margin-inline: auto;
-    height:calc(100vh - 91px);
-    height: calc(100vh - 91px);
+
+/* App.module.css */
+.container-landing {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  text-align: center;
+}
+
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+  gap: 2em;
+}
+/* at smaller screens make feature columns direction */
+@media (max-width: 600px) {
+  .features {
+    flex-direction: column;
+  }
+}
+
+.feature {
+  max-width: 250px;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 35% 1fr;
+  gap: 1em;
+  padding: 1em;
+}
+
+.footer {
+  padding: 20px;
+}
+
+.getStartedButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--primary);
+  transition: all 0.25s ease-in-out;
+}
+.getStartedButton:hover {
+  background-color: var(--primary-hover);
 }

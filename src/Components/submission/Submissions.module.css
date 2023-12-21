@@ -9,11 +9,13 @@
   display: block;
   margin: 20px 0;
   padding: 20px;
-  border: 0.5px solid #464444;
+  border: 0.5px solid var(--border-color);
   transition: all 0.3s ease-in-out;
   width: -webkit-fill-available;
   border-radius: 4px;
+  box-shadow: var(--box-shadow);
 }
+
 .card-footer {
   display: flex;
   justify-content: space-between;
@@ -22,16 +24,18 @@
 .pending {
   color: #f0ad4e;
   padding: 0.6rem;
-  border-radius: 4px;
+  border-radius:  var(--border-radius-default);
   background-color: #464444;
 }
 .tabs {
   display: flex;
   align-items: center;
   gap: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 .tabs button {
-  border-radius: 4px;
+  border-radius:  var(--border-radius-default);
   cursor: pointer;
   text-transform: capitalize;
 }
@@ -40,4 +44,14 @@
 }
 .tabs button:hover {
   background-color: #292828;
+}
+/* loading */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 1em;
+}
+.filter-btn-loading {
+  padding: 0.6em 1.2em;
 }

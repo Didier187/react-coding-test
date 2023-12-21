@@ -1,15 +1,7 @@
 .container {
   padding: 1.5em;
 }
-.count {
-  border: 1px solid #ccc;
-  padding: 1em;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  background-color: rgba(68, 112, 2, 0.473);
-}
+
 .questions-container {
   margin-top: 2em;
 }

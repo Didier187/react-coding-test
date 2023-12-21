@@ -3,6 +3,7 @@ import { useBoundStore } from "../../store";
 import styles from "./Submissions.module.css";
 import SubmissionCard, { SubmissionI } from "./SubmissionCard";
 import { useSearchParams } from "react-router-dom";
+import LoadingSubmissions from "./LoadingSubmissions";
 type Args = [string, { "x-auth-token": string }] & URL & HeadersInit;
 
 const fetcher = (...args: Array<Args>) => {
@@ -32,7 +33,7 @@ export default function Submissions() {
     fetcher
   );
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <LoadingSubmissions />;
   if (error) return <div>error getting the submissions...</div>;
 
   return (
@@ -47,7 +48,7 @@ export default function Submissions() {
               searchParams.get("stat") === item.stat ? styles.active : ""
             }
           >
-             {item.stat}
+            {item.stat}
           </button>
         ))}
       </div>

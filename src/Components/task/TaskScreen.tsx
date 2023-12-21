@@ -7,6 +7,11 @@ import {
   SandpackCodeEditor,
   SandpackPreview,
 } from "@codesandbox/sandpack-react";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+
+import { SandpackFileExplorer } from "sandpack-file-explorer";
 import axios from "axios";
 import useTaskStore from "../../store/taskStore";
 import { ReactNode, useEffect } from "react";
@@ -16,10 +21,15 @@ import Loading from "./Loading";
 
 function Task() {
   const [searchParam] = useSearchParams();
+
   const fetchTask = useTaskStore((state) => state.fetch);
+
   const assignment = useTaskStore((state) => state.assignment);
+
   const error = useTaskStore((state) => state.error);
+
   const isFetching = useTaskStore((state) => state.isFetching);
+
   const { sandpack } = useSandpack();
   const { files } = sandpack;
 
@@ -31,6 +41,23 @@ function Task() {
     if (!assignment) return;
 
     const submittable = assignment.assignedQuestion[0];
+    // create new files object with filtered items
+    const withoutEmptyDirectories = Object.keys(files)
+      .filter((item) => files[item].code !== ".emptyDir")
+      .reduce(
+        (obj, key) => {
+          obj[key] = files[key];
+          return obj;
+        },
+        {} as Record<
+          string,
+          {
+            code: string;
+            active?: boolean;
+            hidded?: boolean;
+          }
+        >
+      );
 
     axios
       .post(
@@ -42,7 +69,7 @@ function Task() {
               prompt: submittable.prompt,
               _id: submittable._id,
               files: {
-                ...files,
+                ...withoutEmptyDirectories,
               },
             },
           ],
@@ -54,7 +81,7 @@ function Task() {
       })
       .catch(function (error) {
         console.log(error);
-       
+
         // TODO notify the user of the error
       });
   };
@@ -65,7 +92,8 @@ function Task() {
       <div className={styles.header}>
         <div className={styles["header-container"]}>
           <p>
-            Hi {assignment?.name.split(" ")[0]}, welcome to your assignment!{" "}
+            Hi <strong>{assignment?.name.split(" ")[0]}</strong> , welcome to
+            your assignment!{" "}
           </p>
           <button
             onClick={async () => {
@@ -78,17 +106,23 @@ function Task() {
         </div>
       </div>
       <div className={styles["main"]}>
+        <SandpackFileExplorer />
+
         <SandpackLayout
           style={{
             width: "100%",
           }}
         >
           <SandpackCodeEditor
+            style={{
+              minHeight: "100%",
+              maxHeight: "100%",
+              overflow: "auto",
+            }}
             showInlineErrors
             showLineNumbers
             closableTabs
             wrapContent
-            className="sandbox-editor"
           />
           <SandpackPreview
             showNavigator
@@ -123,7 +157,7 @@ const SandBoxProviderWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <SandpackProvider
-        theme="dark"
+        theme="light"
         template="react"
         files={assignment?.assignedQuestion[0]?.files}
         options={{

@@ -56,13 +56,13 @@
   border: 1px solid rgb(173, 67, 67);
 }
 .form-container form input:focus {
-  border: 1px solid #646cff;
+  border: 1px solid var(--primary);
 }
 .form-container form button[type="submit"] {
   padding: 0.8rem;
-  border: 1px solid #646cff;
+  border: 1px solid var(--primary);
   outline: none;
-  background-color: #646cff;
+  background-color: var(--primary);
   color: #fff;
   font-weight: bold;
   cursor: pointer;
@@ -94,7 +94,7 @@
   cursor: not-allowed;
 }
 .form-container form button[type="submit"]:hover {
-  background-color: #4d53ca;
+  background-color: var(--primary-hover);
 }
 .form-container form button[type="submit"]:focus {
   outline: 2px solid white;
@@ -104,11 +104,11 @@
   background-color: #ccc;
 }
 
-.server-error{
-  color:  red;
+.server-error {
+  color: red;
   font-size: 1rem;
   text-align: center;
 }
-.server-error p{
+.server-error p {
   margin-top: 0;
 }

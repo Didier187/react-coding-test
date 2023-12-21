@@ -48,7 +48,12 @@ export default function QuestionsDetails() {
 
   if (isLoading) return <div>loading...</div>;
   if (error) return <Navigate to="/invalid-question-id" />;
+  /*
+Allow user to send the question from this page
+Allow user to send the question from questions page
 
+
+*/
   return (
     <div className={styles["questions-page"]}>
       <div
@@ -88,7 +93,7 @@ export default function QuestionsDetails() {
         options={{
           showLineNumbers: true,
           readOnly: true,
-          wrapContent:true
+          wrapContent: true,
         }}
       />
     </div>
